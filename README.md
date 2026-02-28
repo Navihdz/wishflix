@@ -1,96 +1,114 @@
 # Wishflix
 
-Shared streaming-style wishlist app for couples or groups.
+Wishflix is a self-hosted app to build and manage wishlists of your favorite movies, TV shows, books, and manga/comics.
 
-## Tech Stack
+You can use it as a personal tracker or as a shared family/group wishlist so everyone can save what they want to watch or read later.
 
-- Next.js (App Router)
-- Prisma + SQLite
-- Local auth (email/password + cookie session)
-- TMDB (movies/series) + Open Library (books/comics)
+The app is designed to help you organize and remember content. It does not download media.  
+It enriches content with metadata from:
+- TMDB (movies and TV)
+- Open Library (books and comics/manga)
 
-## Requirements
+This makes it useful as a planning layer before updating your own media services later, such as:
+- Plex / Jellyfin (movies and TV series)
+- Kavita (books and comics)
+
+## Features
+
+- Create personal wishlists by content type.
+- Create or join shared team spaces with a join code.
+- Build a family/group wishlist with collaborative contributions.
+- Discover currently trending/popular movies and TV content from multiple platforms/providers.
+- Browse books/comics and add items quickly.
+- Track item state (`wishlist`, `completed`, `discarded`).
+- Mobile-friendly responsive UI.
+- Ready for self-hosting on your own server.
+
+## Docker
+
+Prebuilt Docker image is available here:
+
+https://hub.docker.com/r/navihdz/wishflix
+
+## Run Locally
+
+### Requirements
 
 - Node.js 20+
 - npm
 
-## Quick Start (Local)
+### 1. Clone the repository
 
-1. Install dependencies:
+```bash
+git clone https://github.com/Navihdz/wishflix.git
+cd wishflix
+```
+
+### 2. Install dependencies
 
 ```bash
 npm install
 ```
 
-2. Create env file:
+### 3. Configure environment variables
+
+Create `.env` from the example:
 
 ```bash
 cp .env.example .env
 ```
 
-3. Edit `.env`:
-- `DATABASE_URL`: keep `file:./dev.db` for local.
-- `SESSION_SECRET`: you can keep the default for local.
-- `TMDB_API_KEY`: set your API key (required for movie/series discovery rails).
+Edit `.env` and set:
+- `DATABASE_URL` (default local SQLite value is fine)
+- `SESSION_SECRET`
+- `TMDB_API_KEY`
 
-4. Apply migrations:
+Get your TMDB API key from:
+https://www.themoviedb.org/settings/api
+
+### 4. Prepare the database
 
 ```bash
 npx prisma migrate deploy
 ```
 
-5. Optional demo seed:
+Optional demo data:
 
 ```bash
 npm run db:seed
 ```
 
-6. Run app:
+### 5. Start the app
 
 ```bash
 npm run dev
 ```
 
-Open `http://localhost:3000`.
+Open:
 
-## Custom Local Port
+http://localhost:3000
 
-Run on another port (example `4000`):
+## Screenshots
 
-```bash
-npm run dev -- -p 4000
-```
+### Home
 
-Then open `http://localhost:4000`.
+![Home 1](./app_captures/inicio.jpg)
+![Home 2](./app_captures/inicio_2.jpg)
 
-## Main Endpoints
+### Wishlist
 
-- `POST /api/auth/login`
-- `POST /api/auth/register`
-- `GET /api/auth/session`
-- `GET /api/discover`
-- `GET /api/items?type=movie&status=wishlist`
-- `POST /api/items`
-- `PATCH /api/items/:id/complete`
-- `PATCH /api/items/:id/discard`
-- `GET /api/spaces/me`
-- `POST /api/spaces/create`
-- `POST /api/spaces/join`
-- `POST /api/spaces/switch-active`
+![Wishlist](./app_captures/wishlist.jpg)
 
-## Tests
+### Team / Shared Space Settings
 
-```bash
-npm test
-```
+![Team Settings](./app_captures/team.jpg)
 
-## Auth Troubleshooting
+### Mobile Version
 
-If login/register returns "Error de autenticacion" with status 500:
+![Mobile](./app_captures/movil.jpg)
 
-```bash
-npx prisma generate
-npx prisma migrate deploy
-```
+## Notes
 
-Then restart the dev server.
+- Wishflix does not provide downloading features.
+- It is focused on metadata-driven discovery and wishlist management.
+- Ideal for running on your own server/home lab.
