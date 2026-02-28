@@ -1,0 +1,38 @@
+{
+  "name": "server_content_wishlist",
+  "version": "1.0.0",
+  "description": "Wishlist compartida estilo streaming para pareja",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "prisma generate",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "node scripts/start-standalone.mjs",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:seed": "node prisma/seed.mjs",
+    "test": "node --test --test-concurrency=1 --test-isolation=none tests/*.test.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@prisma/client": "^6.16.0",
+    "@tailwindcss/postcss": "^4.2.0",
+    "bcryptjs": "^3.0.3",
+    "clsx": "^2.1.1",
+    "jose": "^6.1.3",
+    "next": "^15.5.12",
+    "prisma": "^6.16.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "tailwindcss": "^4.2.0",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/node": "25.3.0",
+    "@types/react": "19.2.14",
+    "typescript": "5.9.3"
+  }
+}

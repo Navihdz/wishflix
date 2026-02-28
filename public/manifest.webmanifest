@@ -1,0 +1,10 @@
+{
+  "name": "Wishlist Streaming Compartida",
+  "short_name": "Wishlist",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0e16",
+  "theme_color": "#0a0e16",
+  "lang": "es",
+  "icons": []
+}

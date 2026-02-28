@@ -1,0 +1,96 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-arm64-openssl-3.0.x", "linux-arm64-openssl-1.1.x"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum ItemType {
+  movie
+  tv
+  book
+  comic
+}
+
+enum ItemStatus {
+  wishlist
+  completed
+  discarded
+}
+
+model User {
+  id           String        @id @default(cuid())
+  name         String
+  email        String        @unique
+  passwordHash String
+  activeSpaceId String?
+  createdAt    DateTime      @default(now())
+  lastHomeVisitedAt DateTime?
+  addedItems   Item[]        @relation("AddedBy")
+  doneItems    Item[]        @relation("CompletedBy")
+  memberships  SpaceMember[]
+  contributedItems ItemContributor[]
+  activeSpace Space?         @relation("ActiveSpace", fields: [activeSpaceId], references: [id], onDelete: SetNull)
+}
+
+model Space {
+  id        String        @id @default(cuid())
+  name      String
+  joinCode  String        @unique
+  createdAt DateTime      @default(now())
+  members   SpaceMember[]
+  items     Item[]
+  activeUsers User[]      @relation("ActiveSpace")
+}
+
+model SpaceMember {
+  id      String @id @default(cuid())
+  spaceId String
+  userId  String
+  role    String @default("member")
+
+  space Space @relation(fields: [spaceId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([spaceId, userId])
+}
+
+model Item {
+  id            String      @id @default(cuid())
+  spaceId       String
+  type          ItemType
+  source        String
+  externalId    String
+  title         String
+  posterImage   String?
+  notes         String?
+  status        ItemStatus  @default(wishlist)
+  addedById     String
+  addedAt       DateTime    @default(now())
+  completedById String?
+  completedAt   DateTime?
+
+  space       Space @relation(fields: [spaceId], references: [id], onDelete: Cascade)
+  addedBy     User  @relation("AddedBy", fields: [addedById], references: [id])
+  completedBy User? @relation("CompletedBy", fields: [completedById], references: [id])
+  contributors ItemContributor[]
+
+  @@unique([spaceId, type, source, externalId])
+  @@index([spaceId, type, status])
+}
+
+model ItemContributor {
+  id        String   @id @default(cuid())
+  itemId    String
+  userId    String
+  createdAt DateTime @default(now())
+
+  item Item @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([itemId, userId])
+  @@index([userId])
+}

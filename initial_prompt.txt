@@ -1,0 +1,240 @@
+Quiero que desarrolles una aplicaciÃ³n tipo â€œNetflix privadoâ€ para guardar wishlist compartida entre dos usuarios (yo y mi esposa). Debe ser muy fÃ¡cil de usar en celular, pero tambiÃ©n verse excelente en PC. Debe ser una web app responsive y preferiblemente PWA (instalable como app en iOS/Android).
+
+Objetivo principal
+
+Navegar contenido (sin buscar) viendo carÃ¡tulas y â€œrecientes / trendingâ€.
+
+Guardar con 1 toque a una wishlist.
+
+Desde wishlist marcar como Visto/LeÃ­do para sacarlo de wishlist.
+
+Tener cuatro listas separadas (no todo junto):
+
+PelÃ­culas
+
+Series
+
+Libros
+
+CÃ³mics
+
+Requisitos de datos por elemento
+
+Cada Ã­tem guardado debe guardar y mostrar:
+
+title (tÃ­tulo)
+
+poster_image (url)
+
+type (movie | tv | book | comic)
+
+source y external_id (ej. tmdb_id, openlibrary_id, comicvine_id)
+
+added_by (usuario que lo agregÃ³)
+
+added_at (fecha)
+
+status: wishlist | completed | discarded (descartado opcional)
+
+completed_by y completed_at cuando se marca como visto/leÃ­do
+
+notes opcional
+
+Experiencia de usuario (UX) que quiero
+
+Interfaz muy bonita, moderna, con diseÃ±o â€œstreaming appâ€.
+
+Optimizada para mÃ³vil: botones grandes, swipe actions, carga rÃ¡pida.
+
+En wishlist: acciÃ³n rÃ¡pida para marcar como visto/leÃ­do:
+
+Swipe derecha: completar (âœ…)
+
+Swipe izquierda: quitar o descartar (ðŸš«) (confirmaciÃ³n ligera)
+
+En cada tarjeta de wishlist mostrar:
+
+CarÃ¡tula
+
+TÃ­tulo
+
+â€œAgregÃ³: {nombre}â€
+
+Fecha (formato bonito: â€œhace 3 dÃ­asâ€ o â€œ21 Feb 2026â€)
+
+BotÃ³n âœ… â€œVisto/LeÃ­doâ€ visible tambiÃ©n sin swipe
+
+NavegaciÃ³n (Variante B: listas separadas)
+
+Usar barra inferior (mÃ³vil) o sidebar (PC) con secciones claras:
+
+Inicio
+
+PelÃ­culas (Wishlist)
+
+Series (Wishlist)
+
+Libros (Wishlist)
+
+CÃ³mics (Wishlist)
+
+Historial (opcional por tipo con filtros)
+
+Inicio (Browsing sin buscar)
+
+Quiero una pantalla principal tipo Netflix con filas:
+
+â€œTendenciasâ€
+
+â€œRecientesâ€
+
+â€œMejor valoradasâ€ (si la API lo permite)
+
+Cada fila en carrusel horizontal con posters
+
+Al tocar una carÃ¡tula se abre un modal o pantalla detalle con:
+
+Poster grande, tÃ­tulo, aÃ±o, descripciÃ³n corta (si disponible)
+
+BotÃ³n â¤ï¸ â€œGuardar en Wishlistâ€
+
+Indicador si ya estÃ¡ guardado (no duplicar)
+
+BÃºsqueda
+
+Debe existir un buscador, pero simple:
+
+Una barra de bÃºsqueda en Inicio o por cada secciÃ³n
+
+Filtro por tipo (pelÃ­cula/serie/libro/cÃ³mic)
+
+Si el Ã­tem ya estÃ¡ guardado, mostrar â€œYa en wishlistâ€ y deshabilitar guardar
+
+â€œScrapingâ€ / ObtenciÃ³n de datos (usar APIs, no scraping frÃ¡gil)
+
+Implementar integraciÃ³n con:
+
+TMDB para pelÃ­culas/series: trending, now_playing, popular, top_rated
+
+Open Library para libros: bÃºsqueda + covers
+
+ComicVine para cÃ³mics: bÃºsqueda + imÃ¡genes + listas si se puede
+Si alguna API requiere key, usar .env y documentaciÃ³n clara para configurarlo.
+
+Multiusuario compartido (muy importante)
+
+Debe haber autenticaciÃ³n simple: email+password o magic link.
+
+Debe existir un â€œSpace/Hogarâ€ compartido:
+
+Ambos usuarios ven la misma wishlist.
+
+En cada item se registra quiÃ©n lo agregÃ³ y quiÃ©n lo marcÃ³ como completado.
+
+Backend y base de datos
+
+Proponer una arquitectura sencilla, mantenible.
+
+Base de datos (por ejemplo PostgreSQL o similar) con tablas para:
+
+users
+
+spaces (hogar)
+
+space_members
+
+items (catÃ¡logo guardado por espacio)
+
+API REST o GraphQL para CRUD de wishlist.
+
+Endpoints claros para:
+
+listar items por tipo y status
+
+agregar item
+
+marcar completado
+
+quitar/descartar
+
+Performance y calidad
+
+Lazy loading de imÃ¡genes
+
+Skeleton loaders
+
+Cache de respuestas de â€œtrending/recientesâ€
+
+UI fluida (60fps) y ligera en mÃ³vil
+
+Evitar dependencias pesadas innecesarias
+
+DiseÃ±o visual (look & feel)
+
+Estilo moderno, minimalista, â€œpremiumâ€.
+
+Paleta agradable (oscuro tipo streaming + acentos).
+
+TipografÃ­a clara.
+
+Animaciones sutiles (hover en PC, press feedback en mÃ³vil).
+
+Entregables que quiero del agente
+
+Repositorio con estructura limpia (frontend/backend si aplica).
+
+README con:
+
+cÃ³mo correr en local
+
+cÃ³mo poner API keys
+
+cÃ³mo correr migraciones/DB
+
+App funcional con:
+
+pantalla Inicio con carruseles
+
+4 secciones separadas de wishlist
+
+acciones rÃ¡pidas (swipe y botÃ³n)
+
+multiusuario con â€œSpaceâ€
+
+Semillas/datos demo opcional para probar.
+
+Restricciones
+
+No uses scraping directo de pÃ¡ginas con ToS problemÃ¡tico; usa APIs pÃºblicas/oficiales.
+
+Prioridad: UX mÃ³vil, rapidez, simplicidad.
+
+No quiero cosas complicadas tipo microservicios.
+
+Empieza por construir un MVP completo y estable y deja puntos claros para extender despuÃ©s.
+
+â€œChecklistâ€ rÃ¡pido para que el agente no se desvÃ­e
+
+PÃ­dele que valide esto al final:
+
+ Inicio muestra posters sin buscar (trending/recientes)
+
+ Wishlist separada por PelÃ­culas/Series/Libros/CÃ³mics
+
+ En wishlist se ve quiÃ©n lo agregÃ³ + fecha
+
+ BotÃ³n âœ… o swipe para â€œVisto/LeÃ­doâ€ y se mueve a historial
+
+ Dos usuarios ven la misma lista (Space compartido)
+
+ Se evita duplicar items
+
+ UI se ve excelente en mÃ³vil y PC
+
+Extra: decisiÃ³n que te recomiendo (para que quede â€œsimpleâ€)
+
+Para el MVP, puedes pedirle al agente:
+
+Una sola â€œcolecciÃ³nâ€ por tipo (wishlist + completed), y el historial solo es un filtro status=completed.
+
+Y que el detalle sea modal (mÃ¡s rÃ¡pido que navegar pantallas).
